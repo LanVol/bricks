@@ -1,0 +1,31 @@
+html{
+    padding:0;
+    margin:0;
+}
+body{
+    font-family:sans-serif;
+    background:url(../img/mine.png);
+    background-size:cover;
+}
+#stick{
+    transform: rotate(45deg);
+    width:64px;
+}
+
+#main{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+#points{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    font-size:1.5em;
+}
+#game{
+    background:url(../img/sky.jpg);
+    border:solid black 7px;
+}
