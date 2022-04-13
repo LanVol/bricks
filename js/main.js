@@ -139,7 +139,7 @@
             }
             else if(bricks[row][col]>5 && bricks[row][col]<=7)
                 bricks[row][col]-=1;
-            if(tocke==1){
+            if(tocke==5){
                 Swal.fire({
                     title: 'You won',
                     text: "We're rich!",
