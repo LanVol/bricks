@@ -142,7 +142,7 @@
             if(tocke==5){
                 Swal.fire({
                     title: 'You won',
-                    text: "We're rich!",
+                    text: "You're rich!",
                     imageUrl: 'img/gold_pile.png',
                     imageWidth: 254,
                     imageHeight: 170,
@@ -150,6 +150,8 @@
                     showConfirmButton: true,
                     confirmButtonText: 'Try again?',
                     confirmButtonCollor: '#d1db16',
+                }).then(()=>{
+                    draw();
                 })
                 clearInterval(interval);
             }
@@ -184,8 +186,8 @@
             //draw paddle
             ctx.fillStyle="#000";
             ctx.beginPath();
-            //ctx.rect(paddlex, 0, paddlew, paddleh);
-            ctx.drawImage(stick,paddlex, -1, paddlew, paddleh);
+            ctx.rect(paddlex, 0, paddlew, paddleh);
+            //ctx.drawImage(stick,paddlex, -1, paddlew, paddleh);
             ctx.closePath();
             ctx.fill();
             //draw bricks
@@ -248,7 +250,7 @@
                 else if(y+dy<0+r){
                     Swal.fire({
                         title: 'You lost',
-                        text: 'No gold?',
+                        text: "You didn't collect all the gold",
                         imageUrl: 'img/wallet.jpg',
                         imageWidth: 254,
                         imageHeight: 170,
@@ -260,6 +262,8 @@
                         if (result.isConfirmed) {
                           document.location.reload();
                         }
+                    }).then(()=>{
+                        draw();
                     })
                   clearInterval(interval);
                 }
