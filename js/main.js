@@ -1,3 +1,14 @@
+    function start(){
+        Swal.fire({
+            title: 'Welcome to Gold Digger',
+            text: "Your objective is to collect all the gold. When you collect a gold piece you get a powerup for a few seconds which breaks every block in 1 hit.",
+            showConfirmButton: true,
+            confirmButtonText: 'Start',
+            confirmButtonCollor: '#d1db16',
+        }).then(()=>{
+            drawIt();
+        })
+    }
     function drawIt(){
         //input keys
         var rightDown = false;
@@ -36,12 +47,17 @@
         var bricks;
         var grass=new Image();
         grass.src="img/grass.png";
+        var grassHit=new Audio('sound/grass_break.mp3');
         var dirt=new Image();
         dirt.src="img/dirt.png";
+        var dirtHit=new Audio('sound/dirt_break.mp3');
         var stone=new Image();
         stone.src="img/stone.png";
+        var stoneHit=new Audio('sound/stone_hit.mp3');
+        var stoneBreak=new Audio('sound/stone_break.mp3');
         var goldblock=new Image();
         goldblock.src="img/gold.png";
+        var goldBreak=new Audio('sound/gold_break.mp3');
         var goldStg1=new Image();
         goldStg1.src="img/goldStage1.png";
         var goldStg2=new Image();
@@ -95,8 +111,8 @@
         //circle
         var x=300;
         var y=50;
-        var dx=0;
-        var dy=8;
+        var dx=2;
+        var dy=10;
         var r=12;
 
         //canvas
@@ -110,7 +126,7 @@
 
         function init(){
             tocke=0;
-            $("#tocke").html("Tocke: "+tocke);
+            $("#tocke").html('Points: '+tocke);
             canvas=document.getElementById('canvas');
             ctx=canvas.getContext("2d");
             WIDTH=$("#canvas").width();
@@ -119,26 +135,44 @@
             return interval;
         }
         function rusi(){
-            if(bricks[row][col]>0 && golden>0 && bricks[row][col]<5)
+            if(bricks[row][col]>0 && golden>0 && bricks[row][col]<5){
                 bricks[row][col]=0;
-            else if(bricks[row][col]==1 || bricks[row][col]==2 || bricks[row][col]==3)
+                stoneBreak.play();
+            }
+            else if(bricks[row][col]==1){
                 bricks[row][col]=0;
-            else if(bricks[row][col]==4)
+                grassHit.play();
+            }
+            else if (bricks[row][col]==2){
+                bricks[row][col]=0;
+                dirtHit.play();
+            }
+            else if(bricks[row][col]==3){
+                bricks[row][col]=0;
+                stoneBreak.play();
+            }
+            else if(bricks[row][col]==4){
                 bricks[row][col]=3;
+                stoneHit.play();
+            }
             else if(bricks[row][col]>=5 && bricks[row][col]<=7 && golden>0){
                 bricks[row][col]=0;
                 tocke+=1;
                 $("#tocke").html(tocke);
                 golden=300;
+                goldBreak.play();
             }
             else if(bricks[row][col]==5){
                 bricks[row][col]=0;
                 tocke+=1;
                 $("#tocke").html(tocke);
                 golden=300;
+                goldBreak.play();
             }
-            else if(bricks[row][col]>5 && bricks[row][col]<=7)
+            else if(bricks[row][col]>5 && bricks[row][col]<=7){
                 bricks[row][col]-=1;
+                stoneHit.play();
+            }
             if(tocke==5){
                 Swal.fire({
                     title: 'You won',
@@ -187,7 +221,6 @@
             ctx.fillStyle="#000";
             ctx.beginPath();
             ctx.rect(paddlex, 0, paddlew, paddleh);
-            //ctx.drawImage(stick,paddlex, -1, paddlew, paddleh);
             ctx.closePath();
             ctx.fill();
             //draw bricks
@@ -274,7 +307,7 @@
         function init_paddle(){
             paddlex=WIDTH/2;
             paddleh=10;
-            paddlew=75;
+            paddlew=100;
         }
     initbricks();
     init_mouse();
